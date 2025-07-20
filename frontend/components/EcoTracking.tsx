@@ -16,8 +16,9 @@ export default function EcoTracking() {
         featureId: 3
       });
       setResult(JSON.stringify(response.data, null, 2));
-    } catch (error: any) {
-      setResult(`Error: ${error.message}`);
+    }  catch (error: unknown) {
+      if (error instanceof Error) setResult(`Error: ${error.message}`);
+    
     } finally {
       setLoading(false);
     }

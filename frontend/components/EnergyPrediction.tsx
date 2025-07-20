@@ -17,8 +17,9 @@ export default function EnergyPrediction() {
         isOffPeak: true
       });
       setResult(JSON.stringify(response.data, null, 2));
-    } catch (error) {
-      setResult(`Error: ${error.message}`);
+    }  catch (error: unknown) {
+      if (error instanceof Error) setResult(`Error: ${error.message}`);
+    
     } finally {
       setLoading(false);
     }
