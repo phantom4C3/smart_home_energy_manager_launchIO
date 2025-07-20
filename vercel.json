@@ -4,7 +4,9 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/next",
-      "config": { "distDir": "frontend/.next" }
+      "config": {
+        "distDir": "frontend/.next"
+      }
     },
     {
       "src": "backend/server.js",
