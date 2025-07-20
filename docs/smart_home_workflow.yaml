@@ -1,0 +1,100 @@
+name: Smart Home Device Action Processor
+description: "Processes and validates a list of smart home device actions, returning confirmed and potentially optimized commands for execution by an external system."
+client_mode: false 
+
+agents:
+  - name: DeviceActionAgent
+    instructions: |
+      You are an expert smart home automation assistant. Your sole purpose is to process a list of desired device actions.
+      **Crucially, your output MUST be a JSON array ONLY, with NO additional text, preamble, or conversational filler.**
+      Each object in the array MUST strictly follow the schema provided.
+
+      For each action in the input:
+      1.  **Validate**: Confirm if the 'action' is a standard, recognized control command (e.g., 'on', 'off', 'schedule', 'set_brightness', 'set_temperature').
+      2.  **Confirm**: If valid, set 'status' to 'confirmed'.
+      3.  **Reason**: If an action is invalid or unrecognized, set 'status' to 'invalid' and provide a concise 'reason' string explaining why.
+      4.  **Optimize (Optional/Contextual)**: If 'action' is 'schedule' and 'isOffPeak' is true, or if 'powerUsage' is high, you MAY add a 'suggestion' field for energy efficiency. This is optional.
+
+      **Input Schema (from 'args.input_data'):**
+      ```json
+      [
+        { "deviceId": "string", "action": "string", "powerUsage": "number", "isOffPeak": "boolean" },
+        ...
+      ]
+      ```
+
+      **Output Schema (your response):**
+      ```json
+      [
+        { "deviceId": "string", "action": "string", "status": "string", "reason"?: "string", "suggestion"?: "string" },
+        ...
+      ]
+      ```
+      **Example Output (ONLY this JSON):**
+      ```json
+      [
+        { "deviceId": "light_living_room", "action": "on", "status": "confirmed" },
+        { "deviceId": "thermostat_main", "action": "set_temperature", "status": "invalid", "reason": "Missing 'value' for set_temperature action." },
+        { "deviceId": "washing_machine", "action": "schedule", "status": "confirmed", "suggestion": "Consider scheduling during off-peak hours for maximum savings." }
+      ]
+      ```
+      Ensure all keys are double-quoted. Do not use single quotes.
+    model: "meta-llama/Llama-3.3-70B-Instruct"  
+    tools: []  
+    memories: [] 
+tasks:
+  - task_id: process_device_actions_task
+    name: Process Device Actions
+    objective: "Process the provided smart home device actions for validation and confirmation."
+    agents:
+      - name: DeviceActionAgent 
+    args:
+      input_data:
+        type: array
+        items:
+          type: object
+          properties:
+            deviceId:
+              type: string
+              description: "Unique identifier of the smart home device."
+            action:
+              type: string
+              description: "The desired action to perform (e.g., 'on', 'off', 'schedule', 'set_brightness', 'set_temperature')."
+            powerUsage:
+              type: number
+              description: "Current or typical power usage of the device in Watts."
+            isOffPeak:
+              type: boolean
+              description: "Indicates if the current time is during off-peak energy hours."
+          required:
+            - deviceId
+            - action
+            - powerUsage
+            - isOffPeak 
+    output:
+      type: object
+      properties:
+        processed_actions:
+          type: array
+          items:
+            type: object
+            properties:
+              deviceId:
+                type: string
+              action:
+                type: string
+              status:
+                type: string
+                enum: ["confirmed", "invalid"]
+              reason:
+                type: string
+                description: "Reason if the action is invalid."
+              suggestion:
+                type: string
+                description: "Optional suggestion for optimization."
+            required:
+              - deviceId
+              - action
+              - status
+
+ 
