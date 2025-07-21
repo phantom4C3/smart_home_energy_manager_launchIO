@@ -5,7 +5,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/next",
       "config": {
-         "outputDirectory": "frontend"
+        "distDir": "frontend/.next"
       }
     },
     {
@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "frontend/$1"
     }
   ]
 }
