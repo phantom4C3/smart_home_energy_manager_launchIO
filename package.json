@@ -2,7 +2,7 @@
   "name": "smart_home_energy_manager_launchio",
   "version": "1.0.0",
   "description": "Real-World Impact: Energy management is a critical global challenge, with households seeking cost-effective and eco-friendly solutions.\r Innovative Use of IO Intelligence: Leverages the Models API for predictive analytics and the Agents API for autonomous decision-making and IoT integration.\r Scalability: Applicable to individual homes, apartment complexes, or even microgrids, with potential for broader adoption.\r User Appeal: Combines practicality (cost savings) with innovation (AI-driven automation and renewable energy integration).",
-  "main": "index.js",
+  "main": "backend/server.js",
   "scripts": {
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
