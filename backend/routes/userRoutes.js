@@ -11,5 +11,6 @@ userRouter.put('/:userId', updateUser);
 userRouter.delete('/:userId', deleteUser);
 userRouter.post('/notifications', addNotification);
 userRouter.get('/:userId/notifications', getNotifications);
+ 
 
 export default userRouter;

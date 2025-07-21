@@ -1,34 +1,37 @@
 "use client";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { TagLine, Title } from "../components/ui/Heading";
 import FeatureCard from "../components/FeatureCard";
 import Image from "next/image";
 import slide_image3 from "../public/silde_image (3).jpg";
-import slide_image6 from "../public/silde_image (6).jpeg"; 
+import slide_image6 from "../public/silde_image (6).jpeg";
 
 const features = [
   {
     id: 1,
-    title: 'Energy Prediction',
-    description: 'Predicts energy needs based on device usage and weather conditions, optimizing for cost and eco-friendliness.'
+    title: "Energy Prediction",
+    description:
+      "Predicts energy needs based on device usage and weather conditions, optimizing for cost and eco-friendliness.",
   },
   {
     id: 2,
-    title: 'Device Control',
-    description: 'Autonomously schedules or controls devices to save energy, such as turning off non-essential devices during peak hours.'
+    title: "Device Control",
+    description:
+      "Autonomously schedules or controls devices to save energy, such as turning off non-essential devices during peak hours.",
   },
   {
     id: 3,
-    title: 'Eco Tracking',
-    description: 'Tracks your energy usage and carbon footprint, providing insights to reduce environmental impact.'
-  }
+    title: "Eco Tracking",
+    description:
+      "Tracks your energy usage and carbon footprint, providing insights to reduce environmental impact.",
+  },
 ];
 
 export default function HomePage() {
-  const router = useRouter();  
+  const router = useRouter();
 
   const handleFeatureClick = (id: number) => {
-    router.push(`/features#feature-${id}`);
+    router.push(`/features?feature=${id}`);
   };
 
   return (
@@ -62,8 +65,12 @@ export default function HomePage() {
         </p>
         <ul className="list-disc pl-6 md:pl-48 lg:pl-85 xl:pl-118 2xl:pl-150">
           <li className="text-left">Saves up to 20% on energy bills.</li>
-          <li className="text-left">Maximizes renewable energy usage (solar, battery).</li>
-          <li className="text-left">Reduces carbon footprint with real-time tracking.</li>
+          <li className="text-left">
+            Maximizes renewable energy usage (solar, battery).
+          </li>
+          <li className="text-left">
+            Reduces carbon footprint with real-time tracking.
+          </li>
         </ul>
         <Image
           alt="hero"
