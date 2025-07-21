@@ -24,7 +24,7 @@ interface User {
 }
 
 const mockUser: User = {
-  name: "Demo User",
+  name: "Xander Riorson",
   smartHome: {
     devices: [
       { _id: "d1", name: "Smart Light", status: "on", schedule: { startTime: "08:00", endTime: "18:00" } },
